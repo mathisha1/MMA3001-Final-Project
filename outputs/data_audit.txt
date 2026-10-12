@@ -1,0 +1,126 @@
+== OCCUPANCY ==
+rows: 1,048,575
+WARNING: row count is at Excel's 1,048,576 limit, so the file is truncated
+time range (UTC): 2023-11-23 13:36:52+00:00 to 2024-05-06 01:38:16+00:00  (unparseable: 0)
+events per month:
+t
+2023-11     15133
+2023-12     49415
+2024-01     31958
+2024-02     91331
+2024-03    381279
+2024-04    356543
+2024-05    122916
+headcount values:
+headcount
+0      86173
+1     236442
+2     278474
+3     180039
+4     105404
+5      57446
+6      31841
+7      19213
+8      12842
+9       9315
+10      6994
+11      5571
+12      4528
+13      3576
+14      2729
+15      1921
+16      1236
+17       831
+18       541
+19       408
+20       322
+21       288
+22       278
+23       235
+24       211
+25       190
+26       151
+27       142
+28       130
+29       122
+30        98
+31        80
+32        82
+33        50
+34        57
+35        70
+36        68
+37        67
+38        74
+39        75
+40        63
+41        56
+42        55
+43        34
+44        24
+45        15
+46         7
+47         5
+48         1
+49         1
+status values:
+occupancystatus
+CurrentlyOccupied    962402
+RecentlyOccupied      52393
+NotOccupied           33780
+unique deviceid: 1, unique floorspaceid: 5
+events per floorspaceid (summary):
+count         5.000000
+mean     209715.000000
+std      148950.251052
+min       51199.000000
+25%      132381.000000
+50%      148084.000000
+75%      289206.000000
+max      427705.000000
+
+== ENVIRONMENTAL ==
+raw rows: 179,447, unique sensors: 5
+status values:
+status
+Processed    179447
+rows with a processing error: 0
+rows with unreadable JSON: 0, rows with no readings: 0
+total readings: 1,824,135
+readings per variable:
+variable                          unit  
+Battery                           V         179447
+Carbon dioxide                    ppm       179447
+Formaldehyde                      Âµg/m3     66067
+Humidity                          HR%       179447
+Light Volatile Organic Compounds  ppb       149881
+Particulate matter 1              Âµg/m3    177738
+Particulate matter 10             Âµg/m3    177738
+Particulate matter 2.5            Âµg/m3    177738
+Particulate matter 4              Âµg/m3    177738
+Pressure                          mb        179447
+Temperature                       Â°C       179447
+reading time range (from JSON): 2023-05-05 22:42:45+00:00 to 2026-04-22 13:12:41+00:00
+days between reading time and database time (summary):
+count    1.824135e+06
+mean     1.512370e+02
+std      1.137961e+02
+min      1.236197e-04
+25%      9.587504e+00
+50%      1.602294e+02
+75%      2.440468e+02
+max      3.826466e+02
+
+== ID LINKAGE ==
+env sensors in data: 5, in location sheet: 77, shared: 1
+env sensors with NO location: ['6012002000227', '6012002000241', '6012002000326', '6012002000777']
+occ deviceid vs mapping ID: 0 of 1 shared
+occ deviceid vs mapping SpaceId: 0 of 1 shared
+occ deviceid vs mapping FloorId: 0 of 1 shared
+occ floorspaceid vs mapping ID: 0 of 5 shared
+occ floorspaceid vs mapping SpaceId: 2 of 5 shared
+occ floorspaceid vs mapping FloorId: 0 of 5 shared
+rooms in env sheet: 55, in occupancy mapping sheet: 54, in both: 26
+occupancy rows whose floorspaceid maps to a room: 26.7%
+rooms with BOTH env readings and mapped occupancy: 0
+[]

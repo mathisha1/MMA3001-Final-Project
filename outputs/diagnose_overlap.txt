@@ -1,0 +1,86 @@
+OCCUPANCY WINDOW (UTC): 2023-11-23 13:36:52+00:00 to 2024-05-06 01:38:16+00:00
+
+== 1. THE ENV SENSORS ==
+sensorid                                      6012002000227                     6012002000241                     6012002000326                     6012002000777                     6012002000869
+readings                                              21363                             58908                             58909                             10926                             29341
+created_first              2024-04-30 14:08:47.303613+00:00  2024-02-28 16:11:58.210358+00:00  2024-02-29 06:09:12.444245+00:00  2024-02-29 06:10:24.443407+00:00  2024-02-29 06:11:11.348578+00:00
+created_last               2024-10-10 04:55:44.036588+00:00  2026-04-22 13:20:32.020253+00:00  2026-04-22 13:20:33.199878+00:00  2024-05-22 14:13:48.760363+00:00  2024-10-10 04:56:13.917171+00:00
+time_first                        2023-12-11 05:07:53+00:00         2023-12-11 05:52:45+00:00         2023-12-11 05:00:57+00:00         2023-05-05 22:42:45+00:00         2024-02-29 06:04:56+00:00
+time_last                         2023-12-11 05:07:53+00:00         2025-05-19 13:08:04+00:00         2026-04-22 13:12:41+00:00         2023-05-05 22:42:45+00:00         2024-06-13 17:45:44+00:00
+lag_median_days                                  220.880034                        207.719421                          0.033463                        341.764323                          5.653211
+lag_min_days                                     141.375629                         79.430014                          0.000125                        299.310873                          0.000124
+lag_max_days                                     303.991563                        338.008658                        303.996408                        382.646571                        118.465624
+room                                            NO LOCATION                       NO LOCATION                       NO LOCATION                       NO LOCATION           60 G.38 Compactus_upper
+pct_future_stamped                                      0.0                               0.0                               0.0                               0.0                               0.0
+pct_time_in_occ_window                                100.0                         49.809873                         49.809027                               0.0                         29.699056
+pct_created_in_occ_window                          3.431166                         14.792558                         14.790609                         79.745561                         29.695648
+
+== 2. LAG BETWEEN JSON TIME AND DATABASE TIME (share of readings, %) ==
+lag_bucket     0-1 d  1-30 d  30-90 d  90-180 d  >180 d
+sensorid                                               
+6012002000227    0.0     0.0      0.0      24.3    75.7
+6012002000241    0.0     0.0      2.1      35.2    62.7
+6012002000326   50.2     0.0      2.1      20.3    27.5
+6012002000777    0.0     0.0      0.0       0.0   100.0
+6012002000869   47.9    13.3     25.8      13.1     0.0
+
+median gap between consecutive readings (minutes), JSON clock:
+sensorid
+6012002000227    0.0
+6012002000241    0.0
+6012002000326    0.0
+6012002000777    0.0
+6012002000869    0.0
+duplicate timestamps per sensor:
+sensorid
+6012002000227    21362
+6012002000241    58906
+6012002000326    29870
+6012002000777    10925
+6012002000869    15541
+
+== 3. OCCUPANCY SPACES ==
+                                      events                     first                      last  headcount_median  headcount_max
+floorspaceid                                                                                                                     
+0f3f37f8-0335-41e0-ae87-a1d677dfc7d7  427705 2023-11-23 13:37:32+00:00 2024-05-06 01:38:16+00:00               2.0             25
+227f1068-9e41-469f-bef0-275f27a0bdba  132381 2024-03-03 04:06:30+00:00 2024-05-06 01:37:56+00:00               3.0             38
+3e5a14df-4b14-4ea5-bb9d-46577c6dc9c8   51199 2024-04-30 14:00:16+00:00 2024-05-06 01:35:02+00:00               7.0             25
+941f0352-bb69-47d0-a9c5-ac29eb4f7319  289206 2023-11-23 13:36:52+00:00 2024-05-06 01:37:50+00:00               2.0             14
+cca1ac3e-f81f-4ebb-aa2b-8b0bf3e9e53b  148084 2024-03-03 04:06:30+00:00 2024-05-06 01:38:12+00:00               2.0             49
+
+== 4. CORRELATION CO2 vs HEADCOUNT, JSON clock ==
+shared hours (rows = env sensor, columns = occupancy space):
+floorspaceid   0f3f37f8-0335-41e0-ae87-a1d677dfc7d7  227f1068-9e41-469f-bef0-275f27a0bdba  3e5a14df-4b14-4ea5-bb9d-46577c6dc9c8  941f0352-bb69-47d0-a9c5-ac29eb4f7319  cca1ac3e-f81f-4ebb-aa2b-8b0bf3e9e53b
+sensorid                                                                                                                                                                                                   
+6012002000227                                     1                                     0                                     0                                     1                                     0
+6012002000241                                     1                                     0                                     0                                     1                                     0
+6012002000326                                     1                                     0                                     0                                     1                                     0
+6012002000869                                  1405                                  1231                                    96                                  1205                                   927
+Pearson r (blank = under 24 shared hours):
+floorspaceid   0f3f37f8-0335-41e0-ae87-a1d677dfc7d7  227f1068-9e41-469f-bef0-275f27a0bdba  3e5a14df-4b14-4ea5-bb9d-46577c6dc9c8  941f0352-bb69-47d0-a9c5-ac29eb4f7319  cca1ac3e-f81f-4ebb-aa2b-8b0bf3e9e53b
+sensorid                                                                                                                                                                                                   
+6012002000227                                   NaN                                   NaN                                   NaN                                   NaN                                   NaN
+6012002000241                                   NaN                                   NaN                                   NaN                                   NaN                                   NaN
+6012002000326                                   NaN                                   NaN                                   NaN                                   NaN                                   NaN
+6012002000869                                   0.5                                  0.45                                  0.76                                  0.65                                  0.33
+
+== 4. CORRELATION CO2 vs HEADCOUNT, database clock ==
+shared hours (rows = env sensor, columns = occupancy space):
+floorspaceid   0f3f37f8-0335-41e0-ae87-a1d677dfc7d7  227f1068-9e41-469f-bef0-275f27a0bdba  3e5a14df-4b14-4ea5-bb9d-46577c6dc9c8  941f0352-bb69-47d0-a9c5-ac29eb4f7319  cca1ac3e-f81f-4ebb-aa2b-8b0bf3e9e53b
+sensorid                                                                                                                                                                                                   
+6012002000227                                   120                                   128                                    96                                   103                                    76
+6012002000241                                  1405                                  1231                                    96                                  1205                                   927
+6012002000326                                  1405                                  1231                                    96                                  1205                                   927
+6012002000777                                  1405                                  1231                                    96                                  1205                                   927
+6012002000869                                  1405                                  1231                                    96                                  1205                                   927
+Pearson r (blank = under 24 shared hours):
+floorspaceid   0f3f37f8-0335-41e0-ae87-a1d677dfc7d7  227f1068-9e41-469f-bef0-275f27a0bdba  3e5a14df-4b14-4ea5-bb9d-46577c6dc9c8  941f0352-bb69-47d0-a9c5-ac29eb4f7319  cca1ac3e-f81f-4ebb-aa2b-8b0bf3e9e53b
+sensorid                                                                                                                                                                                                   
+6012002000227                                   NaN                                   NaN                                   NaN                                   NaN                                   NaN
+6012002000241                                   NaN                                   NaN                                   NaN                                   NaN                                   NaN
+6012002000326                                   NaN                                   NaN                                   NaN                                   NaN                                   NaN
+6012002000777                                   NaN                                   NaN                                   NaN                                   NaN                                   NaN
+6012002000869                                  0.49                                  0.45                                  0.76                                  0.64                                  0.32
+
+Note: 5 sensors x 5 spaces = 25 comparisons, so one moderate r could be chance.
+A real match should show r clearly above the rest, with hundreds of shared hours.

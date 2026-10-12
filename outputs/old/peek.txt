@@ -1,0 +1,47 @@
+﻿Found 3 Excel files in C:\MMA3001-Final-Project\data\raw
+
+======================================================================
+FILE: 5EnvSensor_MayToDec2024_180kRows.xlsx
+sheets: ['5EnvSensor_MayToDec2024_180kRow']
+
+--- sheet '5EnvSensor_MayToDec2024_180kRow' ---
+columns: ['id', 'sensorid', 'devicetype', 'jsondata', 'status', 'processing_errors', 'createdate', 'processdate']
+   id       sensorid devicetype                                                     jsondata     status  processing_errors                     createdate                    processdate
+0   2  6012002000241        env  [{"values": [{"time": 1702273965, "value": 4.1875}], "va...  Processed                NaN  2024-02-29 03:11:58.210358+11  2024-02-29 03:11:58.210358+11
+1   4  6012002000241        env  [{"values": [{"time": 1702273965, "value": 4.1875}], "va...  Processed                NaN  2024-02-29 17:09:08.833822+11  2024-02-29 17:09:08.833822+11
+2   5  6012002000326        env  [{"values": [{"time": 1702270857, "value": 4.1875}], "va...  Processed                NaN  2024-02-29 17:09:12.444245+11  2024-02-29 17:09:12.444245+11
+3  16  6012002000777        env  [{"values": [{"time": 1683326565, "value": 4.1562}], "va...  Processed                NaN  2024-02-29 17:10:24.443407+11  2024-02-29 17:10:24.443407+11
+4  24  6012002000869        env  [{"values": [{"time": 1709186696, "value": 4.125}], "var...  Processed                NaN  2024-02-29 17:11:11.348578+11  2024-02-29 17:11:11.348578+11
+======================================================================
+FILE: 5occupancySensor_MayToDec2024_9MRows.xlsx
+sheets: ['5occupancySensor_MayToDec2024_9']
+
+--- sheet '5occupancySensor_MayToDec2024_9' ---
+columns: ['id', 'deviceid', 'floorspaceid', 'occupancystatus', 'headcount', 'collecteddate', 'occupancystatuschangedate', 'previousoccupancystatus']
+       id                              deviceid                          floorspaceid    occupancystatus  headcount           collecteddate occupancystatuschangedate previousoccupancystatus
+0  136043  56923747-b390-4f2a-8930-808429132266  941f0352-bb69-47d0-a9c5-ac29eb4f7319  CurrentlyOccupied          1  2023-11-24 00:36:52+11    2023-11-24 00:36:52+11             NotOccupied
+1  136048  56923747-b390-4f2a-8930-808429132266  941f0352-bb69-47d0-a9c5-ac29eb4f7319   RecentlyOccupied          0  2023-11-24 00:37:32+11    2023-11-24 00:37:32+11       CurrentlyOccupied
+2  136050  56923747-b390-4f2a-8930-808429132266  0f3f37f8-0335-41e0-ae87-a1d677dfc7d7  CurrentlyOccupied          1  2023-11-24 00:37:32+11    2023-11-24 00:37:32+11             NotOccupied
+3  136052  56923747-b390-4f2a-8930-808429132266  941f0352-bb69-47d0-a9c5-ac29eb4f7319        NotOccupied          0  2023-11-24 00:37:52+11    2023-11-24 00:37:52+11        RecentlyOccupied
+4  136053  56923747-b390-4f2a-8930-808429132266  0f3f37f8-0335-41e0-ae87-a1d677dfc7d7   RecentlyOccupied          0  2023-11-24 00:37:52+11    2023-11-24 00:37:52+11       CurrentlyOccupied
+======================================================================
+FILE: Sensor ID and Locations.xlsx
+sheets: ['ENV', 'OCC (Incorrect Data - SpaceFloo']
+
+--- sheet 'ENV' ---
+columns: ['Building', 'Floor/Room', 'Area', 'Physical Label', 'Sensor', 'ID']
+   Building Floor/Room          Area Physical Label Sensor             ID
+0        60     1-PS01      Corridor         ES1104    Env  6012003000486
+1        69     1-PS02      Breakout         ES2113    Env  6012003000882
+2        60       1.40    Board Room         ES1102    Env  6012003000462
+3        60       1.41   Open Office         ES1110    Env  6012003000424
+4        60      1.41A  Focus Room 1         ES1101    Env  6012003000448
+
+--- sheet 'OCC (Incorrect Data - SpaceFloo' ---
+columns: ['Building', 'Floor/Room', 'Area', 'ID', 'Note', 'FloorId', 'SpaceId']
+   Building Floor/Room  Area              ID  Note                               FloorId                               SpaceId
+0        60     1-PS01   NaN  8034-2812-ae89   NaN  94fda9ec-e483-460e-96ce-5767c791c1c1  fe553808-899c-43a3-96f7-f444f41f3046
+1        60     1-PS01   NaN  8034-2812-c28f   NaN  94fda9ec-e483-460e-96ce-5767c791c1c1  bd7e25c4-beb5-4d17-9426-859cacfd0f03
+2        60     1-PS01   NaN  8034-2812-bfc5   NaN  94fda9ec-e483-460e-96ce-5767c791c1c1  67235649-ade6-43d7-a216-180d6dd8e3c1
+3        60     1-PS01   NaN  8034-2812-cc64   NaN  94fda9ec-e483-460e-96ce-5767c791c1c1  7ac9618b-5096-41a1-85d9-2db3541075e6
+4        60       1.38   NaN  8034-2812-ecc1   NaN  94fda9ec-e483-460e-96ce-5767c791c1c1  56d7400d-7933-4e4e-9ecc-e5da4c8f991d

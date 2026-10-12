@@ -1,0 +1,97 @@
+== OCCUPANCY (full extract) ==
+rows: 9,091,732   unparseable timestamps: 0
+time range (UTC): 2023-11-23 13:36:52+00:00 to 2026-04-22 13:02:38+00:00
+unique deviceid: 1, unique floorspaceid: 5
+
+events per month:
+t
+2023-11     15133
+2023-12     49415
+2024-01     31958
+2024-02     91331
+2024-03    381279
+2024-04    356543
+2024-05    702321
+2024-06    332372
+2024-07    525196
+2024-08    761191
+2024-09    741583
+2024-10    703480
+2024-11    169534
+2024-12    188014
+2025-01    107629
+2025-02    141809
+2025-03    232225
+2025-04    212245
+2025-05    516511
+2025-06    154975
+2025-07    247133
+2025-08    361997
+2025-09    367217
+2025-10    367458
+2025-11    191228
+2025-12    144261
+2026-01    193526
+2026-02    230568
+2026-03    363092
+2026-04    210508
+Freq: M
+
+status values:
+occupancystatus
+CurrentlyOccupied    8405894
+RecentlyOccupied      420133
+NotOccupied           265705
+
+headcount summary (percentiles):
+count    9.091732e+06
+mean     3.174405e+00
+std      3.395244e+00
+min      0.000000e+00
+50%      2.000000e+00
+90%      6.000000e+00
+99%      1.700000e+01
+99.9%    3.500000e+01
+max      7.200000e+01
+headcount NaN: 0, negative: 0
+
+per occupancy space:
+                                       events                     first                      last  hc_median  hc_p99  hc_max  days_active
+floorspaceid                                                                                                                             
+0f3f37f8-0335-41e0-ae87-a1d677dfc7d7  2169461 2023-11-23 13:37:32+00:00 2026-04-22 13:02:18+00:00        2.0    11.0    40.0          862
+941f0352-bb69-47d0-a9c5-ac29eb4f7319  1975423 2023-11-23 13:36:52+00:00 2026-04-22 13:02:38+00:00        2.0     6.0    15.0          862
+cca1ac3e-f81f-4ebb-aa2b-8b0bf3e9e53b  1894871 2024-03-03 04:06:30+00:00 2026-04-22 12:54:50+00:00        3.0    28.0    72.0          777
+3e5a14df-4b14-4ea5-bb9d-46577c6dc9c8  1551583 2024-04-30 14:00:16+00:00 2024-12-30 12:01:56+00:00        3.0    15.0    36.0          245
+227f1068-9e41-469f-bef0-275f27a0bdba  1500394 2024-03-03 04:06:30+00:00 2026-04-22 12:09:42+00:00        2.0    15.0    38.0          781
+
+== ID LINKAGE (occupancy vs mapping sheet) ==
+occ floorspaceid vs mapping SpaceId: 2 of 5 shared
+occ floorspaceid vs mapping FloorId: 0 of 5 shared
+occ floorspaceid vs mapping ID: 0 of 5 shared
+occ deviceid vs mapping ID/SpaceId/FloorId: [0, 0, 0] shared of 1
+share of events in a space that appears in the mapping: 37.3%
+
+== ENV SENSORS ==
+raw rows: 179,447, unique sensors: 5
+unreadable JSON rows: 0, total readings: 1,824,135
+               readings  unique_times                     first                      last  pct_unique  unique_times_inside_occ_window         room
+sensorid                                                                                                                                          
+6012002000227     21363             1 2023-12-11 05:07:53+00:00 2023-12-11 05:07:53+00:00         0.0                               1  NO LOCATION
+6012002000241     58908             2 2023-12-11 05:52:45+00:00 2025-05-19 13:08:04+00:00         0.0                               2  NO LOCATION
+6012002000326     58909         29039 2023-12-11 05:00:57+00:00 2026-04-22 13:12:41+00:00        49.3                           29037  NO LOCATION
+6012002000777     10926             1 2023-05-05 22:42:45+00:00 2023-05-05 22:42:45+00:00         0.0                               0  NO LOCATION
+6012002000869     29341         13800 2024-02-29 06:04:56+00:00 2024-06-13 17:45:44+00:00        47.0                           13800      60 G.38
+
+variables available (readings per variable):
+variable                          unit 
+Battery                           V        179447
+Carbon dioxide                    ppm      179447
+Formaldehyde                      µg/m3     66067
+Humidity                          HR%      179447
+Light Volatile Organic Compounds  ppb      149881
+Particulate matter 1              µg/m3    177738
+Particulate matter 10             µg/m3    177738
+Particulate matter 2.5            µg/m3    177738
+Particulate matter 4              µg/m3    177738
+Pressure                          mb       179447
+Temperature                       °C       179447

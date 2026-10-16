@@ -1,0 +1,67 @@
+== A. SECONDS BETWEEN CONSECUTIVE EVENTS, per space ==
+          median   p90    p99   p99.9        max  pct_same_timestamp
+space                                                               
+941f0352     4.0  38.0  326.0  4597.2  1349782.0                 0.0
+0f3f37f8     4.0  38.0  266.0  3629.2  1345420.0                 0.0
+227f1068     4.0  52.0  638.0  3998.4    94318.0                 0.0
+cca1ac3e     4.0  22.0  196.0  4118.0   314196.0                 0.0
+3e5a14df     2.0  14.0  102.0  1038.0    55720.0                 0.0
+
+== B. REPEATED READINGS ==
+events whose headcount equals the previous event's: 2.9%
+
+== C. HEADCOUNT BY STATUS ==
+                    events  mean  pct_zero   max
+status                                          
+CurrentlyOccupied  8405894  3.43       0.0  72.0
+RecentlyOccupied    420133  0.00     100.0   0.0
+NotOccupied         265705  0.00     100.0   0.0
+
+== D. LONG GAPS (over 10 min): 46,164 (0.51% of events) ==
+status of the event BEFORE each long gap (%):
+prev_status
+NotOccupied          87.3
+CurrentlyOccupied    12.7
+RecentlyOccupied      0.0
+headcount of the event before each long gap:
+count    46164.00
+mean         0.13
+std          0.35
+min          0.00
+50%          0.00
+90%          1.00
+99%          1.00
+max          3.00
+gap length in hours by previous status (median, 90th percentile):
+                    0.5   0.9
+prev_status                  
+CurrentlyOccupied  0.25  0.56
+RecentlyOccupied   0.73  1.17
+NotOccupied        0.42  2.38
+
+== E. SHARE OF EVENTS BY LOCAL HOUR OF DAY (%) ==
+t
+0     0.7
+1     0.5
+2     0.4
+3     0.4
+4     0.3
+5     0.3
+6     0.4
+7     0.8
+8     2.0
+9     3.9
+10    6.2
+11    8.0
+12    9.0
+13    9.7
+14    9.9
+15    9.9
+16    9.4
+17    8.6
+18    5.8
+19    4.9
+20    3.5
+21    2.4
+22    1.7
+23    1.1

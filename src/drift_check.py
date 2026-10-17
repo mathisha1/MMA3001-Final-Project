@@ -19,6 +19,8 @@ def log(msg=""):
 h = pd.read_parquet(ROOT / "data" / "processed" / "hourly.parquet")
 h = h[~((h["n_events"] == 0) & (h["snapshot"] > 0))]      # drop the ambiguous held-value hours
 h = add_calendar_features(h)
+parts = split_by_time(h)
+h = pd.concat([parts["train"], parts["val"]])   # keep the test period out of exploration
 h["ym"] = h["local_time"].dt.strftime("%Y-%m")             # calendar month label
 day = (h["dow"] < 5) & (h["hour"] >= 9) & (h["hour"] < 17)  # weekday 9am to 5pm
 d = h[day]

@@ -49,3 +49,72 @@ def split_by_time(df):
     return {"train": df[t < TRAIN_END],
             "val": df[(t >= TRAIN_END) & (t < VAL_END)],
             "test": df[t >= VAL_END]}
+
+PERIODS = {"teaching", "non_teaching", "closure"}   # allowed labels in the term calendar
+
+
+def load_term_calendar(path, first="2023-11-01", last="2026-04-30"):
+    """Read the hand-made term calendar into one label per local calendar day.
+
+    Parameters
+    ----------
+    path : pathlib.Path
+        CSV with columns start, end, period. Dates are local (YYYY-MM-DD) and
+        inclusive. Text after # on a line is ignored. Where rows overlap, the
+        later row wins.
+    first, last : str
+        First and last day the calendar must be able to label.
+
+    Returns
+    -------
+    pandas.Series
+        Index is the date as 'YYYY-MM-DD' text, value is the period label (missing
+        for days that no row covers).
+
+    Raises
+    ------
+    ValueError
+        If a period label is not in PERIODS, or a row ends before it starts.
+    """
+    cal = pd.read_csv(path, comment="#", parse_dates=["start", "end"])
+    cal["period"] = cal["period"].str.strip()            # remove spaces left before a # comment
+    bad = set(cal["period"]) - PERIODS
+    if bad:
+        raise ValueError(f"unknown period labels {sorted(bad)}; use {sorted(PERIODS)}")
+    if (cal["end"] < cal["start"]).any():
+        raise ValueError("a calendar row ends before it starts")
+    days = pd.date_range(first, last, freq="D")
+    label = pd.Series(None, index=days.strftime("%Y-%m-%d"), dtype="object")
+    for _, row in cal.iterrows():                        # later rows override earlier ones
+        label[(days >= row["start"]) & (days <= row["end"])] = row["period"]
+    return label
+
+
+def add_term(df, calendar):
+    """Add a 'period' column (teaching, non_teaching or closure) from the local date.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Output of add_calendar_features (needs the tz-aware local_time column).
+    calendar : pandas.Series
+        Output of load_term_calendar.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Copy with the period column added.
+
+    Raises
+    ------
+    ValueError
+        If any row falls on a date the calendar does not label.
+    """
+    out = df.copy()
+    day = out["local_time"].dt.strftime("%Y-%m-%d")      # local date, so daylight saving edges are right
+    out["period"] = day.map(calendar)
+    missing = out["period"].isna()
+    if missing.any():
+        raise ValueError("calendar does not label these dates: "
+                         f"{sorted(day[missing].unique())[:5]} ...")
+    return out

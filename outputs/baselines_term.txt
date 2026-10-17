@@ -1,0 +1,35 @@
+== HOURS PER PERIOD LABEL ==
+              train    val   test
+period                           
+non_teaching  19362  11422  11799
+teaching      18183  11317   8996
+closure        2168    576   1632
+
+== CALENDAR CHECK: TRAIN, WEEKDAY 9AM-5PM ==
+              hours  mean  pct_zero
+period                             
+closure         573  0.37     49.21
+non_teaching   4567  1.29      3.28
+teaching       4320  2.79      0.81
+expect: teaching highest, closure near zero. If not, recheck the dates in term_calendar.csv
+
+== VALIDATION, ALL HOURS (mean actual 0.598 people) ==
+                        baseline   MAE  RMSE    R2  cells_seen
+       hour-of-week (all spaces) 0.540 1.084 0.170         1.0
+term + hour-of-week (all spaces) 0.540 1.086 0.168         1.0
+  term + hour-of-week, per space 0.505 1.092 0.159         1.0
+term + weekend + hour, per space 0.497 1.072 0.190         1.0
+
+== VALIDATION, WEEKDAY 9AM-5PM (5,536 hours) ==
+                        baseline   MAE  RMSE     R2  cells_seen
+       hour-of-week (all spaces) 1.027 1.606 -0.071         1.0
+term + hour-of-week (all spaces) 1.030 1.611 -0.078         1.0
+  term + hour-of-week, per space 0.973 1.635 -0.110         1.0
+term + weekend + hour, per space 0.953 1.594 -0.054         1.0
+cells_seen = share of validation hours whose group also exists in training
+
+== LOWEST VALIDATION MAE: term + weekend + hour, per space. ERROR BY PERIOD ==
+      period  hours  mean_actual   MAE  RMSE    R2
+     closure    576        0.162 0.204 0.375 0.134
+non_teaching  11422        0.424 0.334 0.699 0.260
+    teaching  11317        0.795 0.676 1.366 0.139

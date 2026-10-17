@@ -2,8 +2,8 @@
 from pathlib import Path
 import numpy as np
 import pandas as pd
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from src.features import add_calendar_features, split_by_time
+from src.evaluation import metrics, lookup_prediction
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTDIR = ROOT / "outputs"
@@ -18,20 +18,6 @@ def log(msg=""):
     """Print a line and keep it for the saved report."""
     print(msg, flush=True)
     report.append(str(msg))
-
-
-def metrics(y, p):
-    """MAE and RMSE (people) and R2 for predictions p against truth y."""
-    return {"MAE": mean_absolute_error(y, p),
-            "RMSE": float(np.sqrt(mean_squared_error(y, p))),
-            "R2": r2_score(y, p)}
-
-
-def lookup_prediction(train, keys, df, fallback):
-    """Predict each row of df as the training mean of its group (keys).
-    Groups unseen in training get the fallback value."""
-    table = train.groupby(keys)[TARGET].mean().rename("pred").reset_index()
-    return df[keys].merge(table, on=keys, how="left")["pred"].fillna(fallback).to_numpy()
 
 
 h = pd.read_parquet(ROOT / "data" / "processed" / "hourly.parquet")

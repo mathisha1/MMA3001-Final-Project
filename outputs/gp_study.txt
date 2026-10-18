@@ -1,0 +1,76 @@
+training hours available: 39,713; validation hours: 23,315; GP inputs: 10 (hour_sin, hour_cos, dow_sin, dow_cos, period_code, space_0f3f37f8, space_227f1068, space_3e5a14df, space_941f0352, space_cca1ac3e)
+
+== A. GP FIT AND VALIDATION, BY SUBSAMPLE SIZE ==
+opt_not_converged = optimiser warnings; param_at_bound = hyperparameters stuck at a bound; coverage95 = share of validation hours inside the 95% band (ideal 0.95)
+   n  seed  fit_s  predict_s  K_MB     logML  opt_not_converged  param_at_bound   MAE  RMSE     R2  MAE_day  coverage95  coverage95_day  mean_sd
+ 250     0  1.967      0.218   0.5  -286.256                  0               2 0.593 1.259 -0.118    1.040       0.936           0.850    0.872
+ 500     0  4.766      0.505   2.0  -565.140                  0               4 0.538 1.102  0.144    0.994       0.963           0.897    1.077
+1000     0 27.064      0.881   8.0 -1181.539                  0               3 0.505 1.069  0.193    0.933       0.971           0.918    1.086
+2000     0 82.198      1.935  32.0 -2356.372                  0               1 0.477 1.042  0.235    0.867       0.974           0.935    1.062
+2000     1 58.420      1.383  32.0 -2357.426                  0               2 0.512 1.065  0.199    0.958       0.979           0.939    1.232
+2000     2 71.588      1.393  32.0 -2373.659                  0               2 0.516 1.095  0.154    0.971       0.972           0.924    1.180
+
+== B. SAME-n COMPARISON (every model fitted on the same subsample; last column = all training hours, GP excluded) ==
+
+MAE (seed 0):
+n              250    500    1000   2000   39713
+model                                           
+gp             0.593  0.538  0.505  0.477    NaN
+linear         0.554  0.568  0.554  0.532  0.559
+lookup         0.731  0.674  0.591  0.519  0.497
+training mean  0.756  0.802  0.765  0.746  0.775
+tree           0.628  0.616  0.564  0.519  0.495
+
+RMSE (seed 0):
+n              250    500    1000   2000   39713
+model                                           
+gp             1.259  1.102  1.069  1.042    NaN
+linear         1.097  1.093  1.073  1.054  1.067
+lookup         1.425  1.262  1.212  1.127  1.072
+training mean  1.203  1.221  1.206  1.201  1.210
+tree           1.144  1.156  1.119  1.068  1.044
+
+MAE_day (seed 0):
+n              250    500    1000   2000   39713
+model                                           
+gp             1.040  0.994  0.933  0.867    NaN
+linear         0.909  0.909  0.860  0.840  0.866
+lookup         1.229  1.087  0.970  0.953  0.953
+training mean  0.941  0.912  0.934  0.948  0.928
+tree           0.808  0.891  1.079  0.966  0.906
+
+n = 2000, three random subsamples (mean and standard deviation):
+                 MAE          RMSE        MAE_day       
+                mean    std   mean    std    mean    std
+model                                                   
+gp             0.501  0.021  1.067  0.027   0.932  0.056
+linear         0.552  0.017  1.066  0.010   0.867  0.025
+lookup         0.546  0.024  1.170  0.038   1.006  0.046
+training mean  0.770  0.024  1.209  0.009   0.932  0.016
+tree           0.527  0.020  1.077  0.031   0.971  0.105
+
+== C. LEARNED KERNEL (n = 2000, seed 0) ==
+amplitude 0.741; noise level 0.563 (both in units of the standardised target variance)
+length scale per input (large = input barely matters; 100 = at the upper bound):
+hour_sin            1.40
+hour_cos            1.03
+dow_sin             1.75
+dow_cos            24.32
+period_code         1.31
+space_0f3f37f8     94.56
+space_227f1068      3.37
+space_3e5a14df      0.91
+space_941f0352    100.00
+space_cca1ac3e      0.91
+
+== D. COST OF ONE EXACT FACTORISATION (kernel from section C, fixed) ==
+FLOPs for a Cholesky factorisation are about n^3 / 3, and GFLOP_per_s uses that count
+   n  K_MB  build_K_s  cholesky_s  GFLOP_per_s
+ 500   2.0      0.007       0.003       13.234
+1000   8.0      0.023       0.035        9.395
+2000  32.0      0.127       0.139       19.116
+4000 128.0      0.454       0.308       69.312
+8000 512.0      2.850       1.648      103.576
+log-log slope of factorisation time against n (n >= 1000): 1.78 (cubic = 3)
+all 39,713 training hours: the matrix alone would need 12.6 GB, and one factorisation would take about 3 minutes at the measured 104 GFLOP/s (extrapolated, not measured)
+fit time at n = 2000 is 589 times one factorisation, because the optimiser evaluates the likelihood many times

@@ -84,10 +84,10 @@ for sp in SPACES:
         # fitted log-log slope: error ~ h**slope. Coarse and fine ranges of h
         for name in ["trap_rms", "simpson_rms", "boole_rms"]:
             slopes = []
-            for lo, hi in [(2, 6), (8, 11)]:               # coarse: h 1024..64 s, fine: h 16..2 s
+            for lo, hi in [(2, 6), (7, 10)]:               # coarse: h 1024..64 s, fine: h 32..4 s
                 sub = tab[(tab["k"] >= lo) & (tab["k"] <= hi)]
                 slopes.append(np.polyfit(np.log(sub["h_s"]), np.log(sub[name]), 1)[0])
-            log(f"slope of {name}: coarse (h 1024 to 64 s) {slopes[0]:.2f}, fine (h 16 to 2 s) {slopes[1]:.2f}")
+            log(f"slope of {name}: coarse (h 1024 to 64 s) {slopes[0]:.2f}, fine (h 32 to 4 s) {slopes[1]:.2f}")
 
 log("\nNotes: textbook slopes would be 2 (trapezoid), 4 (Simpson), 6 (Boole) for smooth functions.")
 log("Timestamps are whole seconds, so h = 1 s resolves every jump exactly.")

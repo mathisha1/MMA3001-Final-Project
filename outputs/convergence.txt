@@ -17,9 +17,9 @@ SPACE 0f3f37f8: 1500 windows of 4096 s, mean exact headcount 0.72, sampling took
 10 1024    4.0    -0.0003    0.0053       0.0058     0.0062        0.0063
 11 2048    2.0     0.0000    0.0003       0.0018     0.0022        0.0024
 12 4096    1.0     0.0000    0.0001       0.0001     0.0001        0.0002
-slope of trap_rms: coarse (h 1024 to 64 s) 0.66, fine (h 16 to 2 s) 1.82
-slope of simpson_rms: coarse (h 1024 to 64 s) 0.67, fine (h 16 to 2 s) 1.08
-slope of boole_rms: coarse (h 1024 to 64 s) 0.66, fine (h 16 to 2 s) 1.00
+slope of trap_rms: coarse (h 1024 to 64 s) 0.66, fine (h 32 to 4 s) 0.81
+slope of simpson_rms: coarse (h 1024 to 64 s) 0.67, fine (h 32 to 4 s) 0.81
+slope of boole_rms: coarse (h 1024 to 64 s) 0.66, fine (h 32 to 4 s) 0.81
 
 -- BUSY WINDOWS (mean headcount >= 1): 426 windows. RMS error of the window mean, in people --
  k    n    h_s  trap_bias  trap_rms  simpson_rms  boole_rms  romberg3_rms
@@ -36,9 +36,9 @@ slope of boole_rms: coarse (h 1024 to 64 s) 0.66, fine (h 16 to 2 s) 1.00
 10 1024    4.0    -0.0011    0.0091       0.0100     0.0106        0.0107
 11 2048    2.0     0.0000    0.0004       0.0031     0.0039        0.0041
 12 4096    1.0     0.0000    0.0002       0.0001     0.0002        0.0003
-slope of trap_rms: coarse (h 1024 to 64 s) 0.65, fine (h 16 to 2 s) 1.87
-slope of simpson_rms: coarse (h 1024 to 64 s) 0.66, fine (h 16 to 2 s) 1.07
-slope of boole_rms: coarse (h 1024 to 64 s) 0.67, fine (h 16 to 2 s) 0.99
+slope of trap_rms: coarse (h 1024 to 64 s) 0.65, fine (h 32 to 4 s) 0.79
+slope of simpson_rms: coarse (h 1024 to 64 s) 0.66, fine (h 32 to 4 s) 0.78
+slope of boole_rms: coarse (h 1024 to 64 s) 0.67, fine (h 32 to 4 s) 0.78
 
 ======================================================================
 SPACE cca1ac3e: 1500 windows of 4096 s, mean exact headcount 1.48, sampling took 0.3 s
@@ -58,9 +58,9 @@ SPACE cca1ac3e: 1500 windows of 4096 s, mean exact headcount 1.48, sampling took
 10 1024    4.0     0.0000    0.0061       0.0068     0.0072        0.0074
 11 2048    2.0     0.0000    0.0007       0.0021     0.0027        0.0028
 12 4096    1.0     0.0000    0.0004       0.0002     0.0003        0.0003
-slope of trap_rms: coarse (h 1024 to 64 s) 0.69, fine (h 16 to 2 s) 1.48
-slope of simpson_rms: coarse (h 1024 to 64 s) 0.70, fine (h 16 to 2 s) 1.05
-slope of boole_rms: coarse (h 1024 to 64 s) 0.70, fine (h 16 to 2 s) 0.98
+slope of trap_rms: coarse (h 1024 to 64 s) 0.69, fine (h 32 to 4 s) 0.77
+slope of simpson_rms: coarse (h 1024 to 64 s) 0.70, fine (h 32 to 4 s) 0.78
+slope of boole_rms: coarse (h 1024 to 64 s) 0.70, fine (h 32 to 4 s) 0.77
 
 -- BUSY WINDOWS (mean headcount >= 1): 641 windows. RMS error of the window mean, in people --
  k    n    h_s  trap_bias  trap_rms  simpson_rms  boole_rms  romberg3_rms
@@ -77,9 +77,9 @@ slope of boole_rms: coarse (h 1024 to 64 s) 0.70, fine (h 16 to 2 s) 0.98
 10 1024    4.0     0.0003    0.0090       0.0101     0.0107        0.0108
 11 2048    2.0     0.0000    0.0010       0.0031     0.0039        0.0041
 12 4096    1.0     0.0000    0.0005       0.0003     0.0004        0.0004
-slope of trap_rms: coarse (h 1024 to 64 s) 0.68, fine (h 16 to 2 s) 1.48
-slope of simpson_rms: coarse (h 1024 to 64 s) 0.69, fine (h 16 to 2 s) 1.05
-slope of boole_rms: coarse (h 1024 to 64 s) 0.70, fine (h 16 to 2 s) 0.97
+slope of trap_rms: coarse (h 1024 to 64 s) 0.68, fine (h 32 to 4 s) 0.76
+slope of simpson_rms: coarse (h 1024 to 64 s) 0.69, fine (h 32 to 4 s) 0.77
+slope of boole_rms: coarse (h 1024 to 64 s) 0.70, fine (h 32 to 4 s) 0.76
 
 Notes: textbook slopes would be 2 (trapezoid), 4 (Simpson), 6 (Boole) for smooth functions.
 Timestamps are whole seconds, so h = 1 s resolves every jump exactly.

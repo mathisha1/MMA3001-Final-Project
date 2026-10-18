@@ -1,0 +1,100 @@
+== CHECK 0: DO THESE MODELS REPRODUCE STEP 6 ON VALIDATION? ==
+training mean: MAE 0.775 (step 6: 0.775), RMSE 1.210 (step 6: 1.210) OK
+lookup: MAE 0.497 (step 6: 0.497), RMSE 1.072 (step 6: 1.072) OK
+linear: MAE 0.559 (step 6: 0.559), RMSE 1.067 (step 6: 1.067) OK
+tree: MAE 0.495 (step 6: 0.495), RMSE 1.044 (step 6: 1.044) OK
+reproduction passed
+
+== A. ERROR VERSUS FORECAST HORIZON (rolling origin, train + validation data only) ==
+12 origins from 2024-07 to 2025-06; each origin is scored on the following 3 months. MAE_ratio is the model's MAE divided by the training-mean model's MAE in the same window, which removes seasonal level effects.
+
+-- all hours --
+                       origins    MAE  MAE_sd   RMSE  MAE_ratio  mean_actual
+model         horizon                                                       
+linear        1             12  0.630   0.215  1.213      0.708        0.748
+              2             12  0.631   0.223  1.215      0.708        0.735
+              3             12  0.616   0.209  1.165      0.716        0.694
+lookup        1             12  0.546   0.205  1.163      0.609        0.748
+              2             12  0.551   0.220  1.173      0.613        0.735
+              3             12  0.547   0.219  1.135      0.629        0.694
+training mean 1             12  0.876   0.226  1.415      1.000        0.748
+              2             12  0.874   0.222  1.404      1.000        0.735
+              3             12  0.845   0.200  1.336      1.000        0.694
+tree          1             12  0.558   0.219  1.173      0.621        0.748
+              2             12  0.558   0.229  1.172      0.619        0.735
+              3             12  0.550   0.224  1.124      0.631        0.694
+
+-- weekday 9-5 --
+                       origins    MAE  MAE_sd   RMSE  MAE_ratio  mean_actual
+model         horizon                                                       
+linear        1             12  1.075   0.389  1.777      0.949        1.751
+              2             12  1.087   0.396  1.790      0.981        1.726
+              3             12  1.039   0.388  1.684      0.991        1.639
+lookup        1             12  1.060   0.403  1.738      0.903        1.751
+              2             12  1.086   0.441  1.769      0.936        1.726
+              3             12  1.073   0.454  1.714      0.972        1.639
+training mean 1             12  1.267   0.682  2.055      1.000        1.751
+              2             12  1.249   0.708  2.024      1.000        1.726
+              3             12  1.163   0.656  1.886      1.000        1.639
+tree          1             12  1.073   0.443  1.748      0.907        1.751
+              2             12  1.088   0.468  1.760      0.934        1.726
+              3             12  1.058   0.476  1.671      0.957        1.639
+
+== B. LEAVE ONE SPACE OUT (train period -> validation period) ==
+own space: the model saw this space in training. held out: it never saw this space and has no space feature. bias = mean predicted minus mean actual (people).
+   space         model   setting   MAE  RMSE     R2   bias  MAE_day
+0f3f37f8        linear  held out 0.594 0.906 -0.108  0.444    0.948
+0f3f37f8        linear own space 0.427 0.757  0.227  0.196    0.643
+0f3f37f8        lookup  held out 0.554 0.939 -0.192  0.394    1.145
+0f3f37f8        lookup own space 0.347 0.689  0.359  0.090    0.474
+0f3f37f8 training mean  held out 0.719 0.940 -0.193  0.378    0.620
+0f3f37f8 training mean own space 0.676 0.910 -0.119  0.297    0.630
+0f3f37f8          tree  held out 0.555 0.937 -0.186  0.393    1.100
+0f3f37f8          tree own space 0.399 0.752  0.237  0.169    0.691
+227f1068        linear  held out 0.591 0.818 -0.036  0.354    0.943
+227f1068        linear own space 0.614 0.844 -0.103  0.390    0.997
+227f1068        lookup  held out 0.557 0.859 -0.143  0.311    1.105
+227f1068        lookup own space 0.605 0.978 -0.481  0.351    1.393
+227f1068 training mean  held out 0.679 0.849 -0.115  0.273    0.737
+227f1068 training mean own space 0.689 0.855 -0.132  0.292    0.736
+227f1068          tree  held out 0.559 0.857 -0.139  0.310    1.122
+227f1068          tree own space 0.501 0.743  0.146  0.213    0.927
+941f0352        linear  held out 0.537 0.734  0.238  0.361    0.694
+941f0352        linear own space 0.408 0.598  0.494  0.104    0.605
+941f0352        lookup  held out 0.508 0.768  0.166  0.311    0.901
+941f0352        lookup own space 0.321 0.515  0.626 -0.013    0.580
+941f0352 training mean  held out 0.783 0.892 -0.124  0.296    0.859
+941f0352 training mean own space 0.747 0.867 -0.063  0.212    0.910
+941f0352          tree  held out 0.518 0.778  0.144  0.311    0.901
+941f0352          tree own space 0.382 0.585  0.516  0.078    0.676
+cca1ac3e        linear  held out 0.692 1.691  0.192  0.081    1.175
+cca1ac3e        linear own space 0.788 1.707  0.177  0.263    1.220
+cca1ac3e        lookup  held out 0.629 1.651  0.230  0.046    1.157
+cca1ac3e        lookup own space 0.714 1.702  0.181  0.223    1.365
+cca1ac3e training mean  held out 0.967 1.881 -0.000  0.013    1.452
+cca1ac3e training mean own space 0.987 1.882 -0.001  0.058    1.434
+cca1ac3e          tree  held out 0.631 1.650  0.231  0.046    1.148
+cca1ac3e          tree own space 0.697 1.702  0.181  0.169    1.330
+
+average over the four spaces:
+                           MAE   RMSE  MAE_day   bias
+model         setting                                
+linear        held out   0.604  1.037    0.940  0.310
+              own space  0.559  0.977    0.866  0.238
+lookup        held out   0.562  1.054    1.077  0.265
+              own space  0.497  0.971    0.953  0.163
+training mean held out   0.787  1.140    0.917  0.240
+              own space  0.775  1.129    0.928  0.215
+tree          held out   0.566  1.056    1.068  0.265
+              own space  0.495  0.945    0.906  0.157
+
+== C. DROP SPACES ABSENT FROM VALIDATION ['3e5a14df'] FROM TRAINING ==
+       training data         model  train_hours   MAE  RMSE  MAE_day  RMSE_day
+ all training spaces training mean        39713 0.775 1.210    0.928     1.670
+ all training spaces        lookup        39713 0.497 1.072    0.953     1.594
+ all training spaces        linear        39713 0.559 1.067    0.866     1.480
+ all training spaces          tree        39713 0.495 1.044    0.906     1.494
+without those spaces training mean        33916 0.735 1.198    0.957     1.704
+without those spaces        lookup        33916 0.497 1.072    0.953     1.594
+without those spaces        linear        33916 0.556 1.061    0.841     1.468
+without those spaces          tree        33916 0.506 1.074    0.946     1.563

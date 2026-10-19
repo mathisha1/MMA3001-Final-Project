@@ -1,0 +1,57 @@
+== A. MEMORY ==
+3 needed columns as text: 83 MB per million rows, about 0.8 GB for all 9,091,732 rows (extrapolated from the first million)
+compact table actually used (space category, time float64, headcount float32): 118 MB for 9,091,732 rows
+
+== B. LOADING: 30 s wall time under the profiler (profiler adds some overhead) ==
+         65857 function calls (63774 primitive calls) in 30.149 seconds
+
+   Ordered by: cumulative time
+   List reduced from 973 to 12 due to restriction <12>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.753    0.753   30.149   30.149 hourly.py:14(load_events)
+       10    0.098    0.010   22.508    2.251 datetimes.py:687(to_datetime)
+       10    0.005    0.001   20.431    2.043 datetimes.py:321(_convert_listlike_datetimes)
+       10   20.014    2.001   20.063    2.006 datetimes.py:459(_array_strptime_with_fallback)
+       10    0.023    0.002    4.234    0.423 datetimes.py:216(_maybe_cache)
+       12    0.004    0.000    3.956    0.330 categorical.py:387(__init__)
+        1    0.005    0.005    3.539    3.539 frame.py:8130(sort_values)
+        1    0.164    0.164    3.217    3.217 sorting.py:302(lexsort_indexer)
+        1    0.044    0.044    2.974    2.974 algorithms.py:652(factorize)
+        1    2.558    2.558    2.558    2.558 algorithms.py:590(factorize_array)
+       12    0.170    0.014    2.009    0.167 base.py:3656(get_indexer)
+       12    1.315    0.110    1.837    0.153 base.py:3798(_get_indexer)
+
+
+
+== C. BUILD HOURLY SERIES: 85,593 hours from 9,091,732 events in 0.95 s ==
+
+== D. HOURLY MEAN: PER-HOUR SCAN VERSUS CUMULATIVE INTEGRAL (200,000 events) ==
+ hours  naive_ms  cumulative_ms  speedup  same_result  naive_comparisons  cumulative_flops
+    50     4.046          1.721    2.351         True           20000000            600400
+   100     6.721          1.788    3.759         True           40000000            600800
+   200    18.294          2.412    7.585         True           80000000            601600
+   400    45.427          1.833   24.782         True          160000000            603200
+   800   141.687          1.914   74.023         True          320000000            606400
+naive: every hour scans every event, so work grows with events x hours. cumulative: one pass over the events (about 3 FLOPs each) plus a binary search per hour.
+
+== E. EMPIRICAL CEILINGS OF THIS MACHINE (NumPy, all cores) ==
+matrix multiply, n = 4000: 312 GFLOP/s
+copy of 400 MB: 23.6 GB/s moved (read + write)
+machine balance (GFLOP/s per GB/s): 13.2 FLOP/byte
+
+== F. CHOLESKY FACTORISATION, RANDOM SPD MATRICES (FLOPs counted as n^3 / 3) ==
+    n  matrix_MB  seconds  GFLOP_per_s  local_exponent
+ 1000        8.0    0.034        9.690             NaN
+ 2000       32.0    0.091       29.227           1.407
+ 4000      128.0    0.281       75.853           1.624
+ 8000      512.0    1.070      159.479           1.928
+12000     1152.0    2.774      207.628           2.349
+log-log slope for n >= 4000: 2.07 (cubic = 3)
+
+== G. ARITHMETIC INTENSITY (hand count) ==
+cumulative integral: about 3 FLOPs per event; if np.diff, the multiply and cumsum each move their arrays through memory that is 56 bytes per event, so AI = 0.054 FLOP/byte (pessimistic, arrays this small mostly stay in cache). Machine balance is 13.2, so it is memory-bound in principle.
+Cholesky n = 2000: 2.67e+09 FLOPs, matrix 0.03 GB, ideal AI = (n^3/3) / (8 n^2) = n/24 = 83 FLOP/byte (upper bound, assumes the matrix moves once), far above machine balance, so compute-bound
+Cholesky n = 8000: 1.71e+11 FLOPs, matrix 0.51 GB, ideal AI = (n^3/3) / (8 n^2) = n/24 = 333 FLOP/byte (upper bound, assumes the matrix moves once), far above machine balance, so compute-bound
+Cholesky n = 39713: 2.09e+13 FLOPs, matrix 12.62 GB, ideal AI = (n^3/3) / (8 n^2) = n/24 = 1655 FLOP/byte (upper bound, assumes the matrix moves once), far above machine balance, so compute-bound
+largest Cholesky reached 208 GFLOP/s, 67% of the matrix-multiply ceiling

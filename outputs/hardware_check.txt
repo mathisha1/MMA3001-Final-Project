@@ -1,0 +1,22 @@
+== MATH LIBRARY IN USE ==
+blas: openblas, 16 threads, version 0.3.34.106.0
+
+== MATRIX MULTIPLY, n = 4000 (2 n^3 FLOPs per product) ==
+ threads  seconds  GFLOP_per_s  speedup_vs_1
+       1     5.55        23.06          1.00
+       2     2.82        45.38          1.97
+       4     1.60        80.20          3.48
+       6     1.01       126.19          5.47
+       8     0.44       291.74         12.65
+      16     0.43       294.94         12.79
+
+== COPY BANDWIDTH, 400 MB (counts bytes read plus bytes written) ==
+ threads  seconds  GB_per_s  speedup_vs_1
+       1     0.03     25.55          1.00
+       2     0.03     26.35          1.03
+       4     0.03     30.39          1.19
+       6     0.03     28.00          1.10
+       8     0.03     24.04          0.94
+      16     0.03     27.73          1.09
+
+machine balance with the best of each: 295 GFLOP/s / 30 GB/s = 9.7 FLOP/byte

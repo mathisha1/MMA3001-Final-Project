@@ -1,0 +1,24 @@
+== VALIDATION (train period -> validation period) ==
+             columns    MAE   RMSE     R2  MAE_day  RMSE_day  pct_negative_raw  fit_s
+variant                                                                              
+additive          30  0.559  1.067  0.196    0.866     1.480            18.881   0.07
+interaction       76  0.544  1.075  0.185    0.883     1.497            16.406   0.13
+
+RMSE gain from the interaction: -0.0076
+RULE RESULT: LINEAR_PRIMARY = "additive"
+
+== SUPPORTING CHECK: ROLLING ORIGINS (next 3 months after each origin) ==
+ origin  MAE_additive  MAE_interaction  RMSE_additive  RMSE_interaction
+2024-07         0.819            0.785          1.743             1.705
+2024-08         0.955            0.911          2.057             2.007
+2024-09         0.818            0.798          1.715             1.681
+2024-10         0.654            0.621          1.356             1.309
+2024-11         0.490            0.450          0.842             0.768
+2024-12         0.444            0.405          0.902             0.846
+2025-01         0.506            0.487          0.965             0.963
+2025-02         0.586            0.577          1.049             1.080
+2025-03         0.671            0.662          1.233             1.269
+2025-04         0.565            0.544          1.092             1.091
+2025-05         0.501            0.482          1.043             1.029
+2025-06         0.517            0.499          0.995             0.989
+interaction has the lower RMSE in 10 of 12 origins (supporting evidence only; the rule uses the validation row)

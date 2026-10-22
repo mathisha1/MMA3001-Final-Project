@@ -38,14 +38,21 @@ def one_hot(series, categories, prefix):
     return pd.get_dummies(cat, prefix=prefix, drop_first=True, dtype=float)
 
 
-def linear_features(df, spaces, use_space=True):
-    """Design matrix for linear regression: [space] + term + hour of day + weekend flag."""
+def linear_features(df, spaces, use_space=True, interaction=False):
+    """Design matrix for linear regression: [space] + term + hour of day + weekend flag.
+
+    With interaction=True, every term indicator is also multiplied by every hour
+    indicator, so a teaching week can have a different daily shape from a break.
+    """
     cols = []
     if use_space:
         cols.append(one_hot(df["space"], spaces, "space"))
-    cols += [one_hot(df["period"], PERIOD_LEVELS, "period"),
-             one_hot(df["hour"], list(range(24)), "hour"),
-             df[["is_weekend"]].astype(float)]
+    period = one_hot(df["period"], PERIOD_LEVELS, "period")     # period_teaching, period_closure
+    hour = one_hot(df["hour"], list(range(24)), "hour")         # hour_1 ... hour_23
+    cols += [period, hour, df[["is_weekend"]].astype(float)]
+    if interaction:
+        inter = {f"{p}_x_{q}": period[p] * hour[q] for p in period.columns for q in hour.columns}
+        cols.append(pd.DataFrame(inter, index=df.index))
     return pd.concat(cols, axis=1)
 
 
@@ -86,11 +93,12 @@ def _spaces(train, test):
     return sorted(set(train["space"]) | set(test["space"]))
 
 
-def predict_linear(train, test, use_space=True):
+def predict_linear(train, test, use_space=True, interaction=False):
     """Fit linear regression on train and predict test. Negative predictions are set to 0."""
     spaces = _spaces(train, test)
-    model = LinearRegression().fit(linear_features(train, spaces, use_space), train[TARGET])
-    return np.clip(model.predict(linear_features(test, spaces, use_space)), 0, None)
+    model = LinearRegression().fit(
+        linear_features(train, spaces, use_space, interaction), train[TARGET])
+    return np.clip(model.predict(linear_features(test, spaces, use_space, interaction)), 0, None)
 
 
 def predict_tree(train, test, use_space=True):

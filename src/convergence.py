@@ -40,7 +40,7 @@ def rms(x):
 occ = load_events(PROC / "occ.parquet")
 hourly = pd.read_parquet(PROC / "hourly.parquet")
 hourly["start_s"] = (hourly["hour_utc"] - EPOCH).dt.total_seconds()
-
+tables = []
 for sp in SPACES:
     g = occ[occ["space"] == sp]
     t = g["t"].to_numpy("float64")
@@ -78,6 +78,7 @@ for sp in SPACES:
                 row[name] = rms(err[(k, j)][mask]) if k >= j else np.nan
             rows.append(row)
         tab = pd.DataFrame(rows)
+        tables.append(tab.assign(space=sp, subset=label.split(" (")[0]))        
         log(f"\n-- {label}: {mask.sum()} windows. RMS error of the window mean, in people --")
         log(tab.round(4).to_string(index=False))
 
@@ -89,6 +90,7 @@ for sp in SPACES:
                 slopes.append(np.polyfit(np.log(sub["h_s"]), np.log(sub[name]), 1)[0])
             log(f"slope of {name}: coarse (h 1024 to 64 s) {slopes[0]:.2f}, fine (h 32 to 4 s) {slopes[1]:.2f}")
 
+pd.concat(tables).to_csv(OUTDIR / "convergence_table.csv", index=False)
 log("\nNotes: textbook slopes would be 2 (trapezoid), 4 (Simpson), 6 (Boole) for smooth functions.")
 log("Timestamps are whole seconds, so h = 1 s resolves every jump exactly.")
 (OUTDIR / "convergence.txt").write_text("\n".join(report), encoding="utf-8")

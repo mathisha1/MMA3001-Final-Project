@@ -1,6 +1,6 @@
 
 ======================================================================
-SPACE 0f3f37f8: 1500 windows of 4096 s, mean exact headcount 0.72, sampling took 0.3 s
+SPACE 0f3f37f8: 1500 windows of 4096 s, mean exact headcount 0.72, sampling took 0.4 s
 
 -- ALL WINDOWS: 1500 windows. RMS error of the window mean, in people --
  k    n    h_s  trap_bias  trap_rms  simpson_rms  boole_rms  romberg3_rms

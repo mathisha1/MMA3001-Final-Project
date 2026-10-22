@@ -1,0 +1,36 @@
+6 months: 13,188 training hours, lookup cells seen in validation: 92.6%
+9 months: 24,190 training hours, lookup cells seen in validation: 100.0%
+12 months: 35,208 training hours, lookup cells seen in validation: 100.0%
+all: 39,713 training hours, lookup cells seen in validation: 100.0%
+
+MAE on validation:
+window         6 months  9 months  12 months    all
+model                                              
+linear            0.512     0.500      0.566  0.559
+lookup            0.495     0.456      0.501  0.497
+training mean     0.754     0.747      0.796  0.775
+tree              0.461     0.455      0.497  0.495
+
+RMSE on validation:
+window         6 months  9 months  12 months    all
+model                                              
+linear            1.052     1.047      1.076  1.067
+lookup            1.071     1.042      1.074  1.072
+training mean     1.203     1.201      1.218  1.210
+tree              1.030     1.024      1.044  1.044
+
+MAE_day on validation:
+window         6 months  9 months  12 months    all
+model                                              
+linear            0.857     0.832      0.893  0.866
+lookup            0.891     0.864      0.962  0.953
+training mean     0.942     0.948      0.915  0.928
+tree              0.817     0.821      0.907  0.906
+
+RMSE_day on validation:
+window         6 months  9 months  12 months    all
+model                                              
+linear            1.496     1.482      1.496  1.480
+lookup            1.571     1.545      1.599  1.594
+training mean     1.687     1.693      1.654  1.670
+tree              1.468     1.471      1.494  1.494

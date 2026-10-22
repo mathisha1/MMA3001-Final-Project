@@ -51,3 +51,12 @@ def test_lookup_uses_training_mean_for_an_unseen_group():
     te = tr.assign(hour=99).head(5)           # hour 99 never appears in training
     p = model_zoo(True)["lookup"](tr, te)
     assert p == pytest.approx(np.full(5, tr[TARGET].mean()))
+
+def test_interaction_adds_term_by_hour_columns():
+    from src.modeling import linear_features
+    df = _toy()
+    base = linear_features(df, ["a", "b"])
+    inter = linear_features(df, ["a", "b"], interaction=True)
+    assert inter.shape[1] - base.shape[1] == 2 * 23          # 2 term indicators x 23 hour indicators
+    col = "period_teaching_x_hour_5"                          # every row of _toy is a teaching hour
+    assert (inter[col] == (df["hour"] == 5).astype(float)).all()

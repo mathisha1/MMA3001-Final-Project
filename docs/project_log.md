@@ -31,6 +31,10 @@
 - Scripts written for the truncated extract would have run out of memory on 9M rows.
 - Environment problems: virtual environment broke after moving the folder out of OneDrive,
   so pytest runs as `python -m pytest`.
+- Predicted that linear and tree would beat lookup on test daytime; they didn’t, and the validation ranking reversed.
+- Guessed LPDDR5X memory (about 134 GB/s); it’s DDR5-5600 on one module (about 45 GB/s peak).
+- Quoted “94% of ceiling” from a noisy run; a repeat gave 105 to 312 GFLOP/s for the same product.
+- Gave figure edits that would have crashed (in the wrong plot) and a zero line on a log axis.
 
 ## What I verified myself
 (fill in: which numbers I recomputed or checked, and how)

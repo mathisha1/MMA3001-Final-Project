@@ -6,6 +6,8 @@ import pandas as pd
 import pyarrow as pa            # parquet engine, lets us write a file chunk by chunk
 import pyarrow.parquet as pq
 
+from src.gp_study import main
+
 ROOT = Path(__file__).resolve().parent.parent   # repo root
 RAW = ROOT / "data" / "raw"                     # where the raw files are
 OUT = ROOT / "data" / "processed"               # where parquet copies go
@@ -32,24 +34,28 @@ def csv_to_parquet(csv_path, out_path):
     writer.close()
     return total
 
+def main():
+    """Convert each raw file to a parquet file in data/processed."""
+    # (file, sheet position or None for CSV, output name)
+    JOBS = [
+        ("Sensor ID and Locations.xlsx", 0, "env_loc"),
+        ("Sensor ID and Locations.xlsx", 1, "occ_map"),
+        ("5EnvSensor_MayToDec2024_180kRows.csv", None, "env"),
+        ("5occupancySensor_MayToDec2024_9MRows.csv", None, "occ"),   # biggest, so last
+    ]
 
-# (file, sheet position or None for CSV, output name)
-JOBS = [
-    ("Sensor ID and Locations.xlsx", 0, "env_loc"),
-    ("Sensor ID and Locations.xlsx", 1, "occ_map"),
-    ("5EnvSensor_MayToDec2024_180kRows.csv", None, "env"),
-    ("5occupancySensor_MayToDec2024_9MRows.csv", None, "occ"),   # biggest, so last
-]
+    for fname, sheet, name in JOBS:
+        start = time.time()
+        print(f"Reading {fname} ...", flush=True)
+        if sheet is None:
+            n = csv_to_parquet(RAW / fname, OUT / f"{name}.parquet")
+            print(f"  saved {name}.parquet: {n:,} rows in {time.time() - start:.0f}s")
+        else:
+            names = pd.ExcelFile(RAW / fname, engine="openpyxl").sheet_names
+            print(f"  sheet names: {names}")   # check these are the sheets you expect
+            df = pd.read_excel(RAW / fname, sheet_name=sheet, dtype=str, engine="openpyxl")
+            df.to_parquet(OUT / f"{name}.parquet")
+            print(f"  saved {name}.parquet: {len(df):,} rows, columns {list(df.columns)}")
 
-for fname, sheet, name in JOBS:
-    start = time.time()
-    print(f"Reading {fname} ...", flush=True)
-    if sheet is None:
-        n = csv_to_parquet(RAW / fname, OUT / f"{name}.parquet")
-        print(f"  saved {name}.parquet: {n:,} rows in {time.time() - start:.0f}s")
-    else:
-        names = pd.ExcelFile(RAW / fname, engine="openpyxl").sheet_names
-        print(f"  sheet names: {names}")   # check these are the sheets you expect
-        df = pd.read_excel(RAW / fname, sheet_name=sheet, dtype=str, engine="openpyxl")
-        df.to_parquet(OUT / f"{name}.parquet")
-        print(f"  saved {name}.parquet: {len(df):,} rows, columns {list(df.columns)}")
+if __name__ == "__main__":
+    main()

@@ -16,13 +16,11 @@
     <nav class="pdoc">
         <label id="navtoggle" for="togglestate" class="pdoc-button"><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke-linecap='round' stroke="currentColor" stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg></label>
         <input id="togglestate" type="checkbox" aria-hidden="true" tabindex="-1">
-        <div>            <a class="pdoc-button module-list-button" href="../index.html">
+        <div>            <a class="pdoc-button module-list-button" href="../src.html">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z"/>
   <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
-</svg>                &nbsp;
-                Module Index
-            </a>
+</svg>                &nbsp;src</a>
 
 
             <input type="search" placeholder="Search..." role="searchbox" aria-label="search"
@@ -64,7 +62,7 @@
     <main class="pdoc">
             <section class="module-info">
                     <h1 class="modulename">
-src<wbr>.hourly    </h1>
+<a href="./../src.html">src</a><wbr>.hourly    </h1>
 
                         <div class="docstring"><p>Helpers for turning occupancy event logs into regular hourly series.</p>
 
@@ -261,16 +259,19 @@ an hour is then the area under the steps divided by the hour length.</p>
 
             <div class="docstring"><p>Load occ.parquet as a compact table sorted by space, then time.</p>
 
-<h2 id="parameters">Parameters</h2>
+<h6 id="parameters">Parameters</h6>
 
-<p>path : pathlib.Path
-    Path to occ.parquet (needs columns floorspaceid, headcount, collecteddate).</p>
+<ul>
+<li><strong>path</strong> (pathlib.Path):
+Path to occ.parquet (needs columns floorspaceid, headcount, collecteddate).</li>
+</ul>
 
-<h2 id="returns">Returns</h2>
+<h6 id="returns">Returns</h6>
 
-<p>pandas.DataFrame
-    Columns: space (first 8 characters of floorspaceid), t (seconds since
-    1970-01-01 UTC, float64), headcount (float32).</p>
+<ul>
+<li><strong>pandas.DataFrame</strong>: Columns: space (first 8 characters of floorspaceid), t (seconds since
+1970-01-01 UTC, float64), headcount (float32).</li>
+</ul>
 </div>
 
 
@@ -307,17 +308,20 @@ an hour is then the area under the steps divided by the hour length.</p>
 
             <div class="docstring"><p>Area under the step function from t[0] to each event time.</p>
 
-<h2 id="parameters">Parameters</h2>
+<h6 id="parameters">Parameters</h6>
 
-<p>t : numpy.ndarray
-    Sorted event times in seconds.
-v : numpy.ndarray
-    Headcount logged at each event. It is held until the next event.</p>
+<ul>
+<li><strong>t</strong> (numpy.ndarray):
+Sorted event times in seconds.</li>
+<li><strong>v</strong> (numpy.ndarray):
+Headcount logged at each event. It is held until the next event.</li>
+</ul>
 
-<h2 id="returns">Returns</h2>
+<h6 id="returns">Returns</h6>
 
-<p>numpy.ndarray
-    Same length as t. Units are people x seconds.</p>
+<ul>
+<li><strong>numpy.ndarray</strong>: Same length as t. Units are people x seconds.</li>
+</ul>
 </div>
 
 
@@ -384,17 +388,20 @@ v : numpy.ndarray
 
             <div class="docstring"><p>Exact mean headcount in each hour [start, start + 3600 s).</p>
 
-<h2 id="parameters">Parameters</h2>
+<h6 id="parameters">Parameters</h6>
 
-<p>t, v : numpy.ndarray
-    Event times (s) and headcounts.
-starts : numpy.ndarray
-    Start time of each hour in seconds.</p>
+<ul>
+<li><strong>t, v</strong> (numpy.ndarray):
+Event times (s) and headcounts.</li>
+<li><strong>starts</strong> (numpy.ndarray):
+Start time of each hour in seconds.</li>
+</ul>
 
-<h2 id="returns">Returns</h2>
+<h6 id="returns">Returns</h6>
 
-<p>numpy.ndarray
-    Mean headcount (people) in each hour.</p>
+<ul>
+<li><strong>numpy.ndarray</strong>: Mean headcount (people) in each hour.</li>
+</ul>
 </div>
 
 

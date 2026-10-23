@@ -1,6 +1,6 @@
 
 ======================================================================
-SPACE 0f3f37f8: 1500 windows of 4096 s, mean exact headcount 0.72, sampling took 0.4 s
+SPACE 0f3f37f8: 1500 windows of 4096 s, mean exact headcount 0.72, sampling took 0.2 s
 
 -- ALL WINDOWS: 1500 windows. RMS error of the window mean, in people --
  k    n    h_s  trap_bias  trap_rms  simpson_rms  boole_rms  romberg3_rms
@@ -41,7 +41,7 @@ slope of simpson_rms: coarse (h 1024 to 64 s) 0.66, fine (h 32 to 4 s) 0.78
 slope of boole_rms: coarse (h 1024 to 64 s) 0.67, fine (h 32 to 4 s) 0.78
 
 ======================================================================
-SPACE cca1ac3e: 1500 windows of 4096 s, mean exact headcount 1.48, sampling took 0.3 s
+SPACE cca1ac3e: 1500 windows of 4096 s, mean exact headcount 1.48, sampling took 0.2 s
 
 -- ALL WINDOWS: 1500 windows. RMS error of the window mean, in people --
  k    n    h_s  trap_bias  trap_rms  simpson_rms  boole_rms  romberg3_rms

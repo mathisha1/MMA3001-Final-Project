@@ -20,41 +20,46 @@ def log(msg=""):
     report.append(str(msg))
 
 
-h = pd.read_parquet(ROOT / "data" / "processed" / "hourly.parquet")
-h = h[~((h["n_events"] == 0) & (h["snapshot"] > 0))]     # drop 138 ambiguous held-value hours
-h = add_calendar_features(h)
-parts = split_by_time(h)
-train, val = parts["train"], parts["val"]
+def main ():
+    '''Score the calendar baselines on validation.'''
+    h = pd.read_parquet(ROOT / "data" / "processed" / "hourly.parquet")
+    h = h[~((h["n_events"] == 0) & (h["snapshot"] > 0))]     # drop 138 ambiguous held-value hours
+    h = add_calendar_features(h)
+    parts = split_by_time(h)
+    train, val = parts["train"], parts["val"]
 
-log("== SPLIT (local time) ==")
-for name, d in parts.items():
-    log(f"{name}: {len(d):,} hours, {d['local_time'].min().date()} to {d['local_time'].max().date()}, "
-        f"spaces: {sorted(d['space'].unique())}")
-log("test set is not used in this step.")
+    log("== SPLIT (local time) ==")
+    for name, d in parts.items():
+        log(f"{name}: {len(d):,} hours, {d['local_time'].min().date()} to {d['local_time'].max().date()}, "
+            f"spaces: {sorted(d['space'].unique())}")
+    log("test set is not used in this step.")
 
-g = train[TARGET].mean()
-preds = {
-    "overall mean": np.full(len(val), g),
-    "space mean": lookup_prediction(train, ["space"], val, g),
-    "hour-of-week mean (all spaces)": lookup_prediction(train, ["hour_of_week"], val, g),
-    "hour-of-week mean per space": lookup_prediction(train, ["space", "hour_of_week"], val, g),
-}
+    g = train[TARGET].mean()
+    preds = {
+        "overall mean": np.full(len(val), g),
+        "space mean": lookup_prediction(train, ["space"], val, g),
+        "hour-of-week mean (all spaces)": lookup_prediction(train, ["hour_of_week"], val, g),
+        "hour-of-week mean per space": lookup_prediction(train, ["space", "hour_of_week"], val, g),
+    }
 
-log(f"\n== BASELINES ON VALIDATION (mean target in val: {val[TARGET].mean():.3f} people) ==")
-rows = [{"baseline": k, **metrics(val[TARGET], p)} for k, p in preds.items()]
-log(pd.DataFrame(rows).round(3).to_string(index=False))
+    log(f"\n== BASELINES ON VALIDATION (mean target in val: {val[TARGET].mean():.3f} people) ==")
+    rows = [{"baseline": k, **metrics(val[TARGET], p)} for k, p in preds.items()]
+    log(pd.DataFrame(rows).round(3).to_string(index=False))
 
-# the hours that matter for ventilation: weekdays 9am to 5pm
-day = ((val["dow"] < 5) & (val["hour"] >= 9) & (val["hour"] < 17)).to_numpy()
-log(f"\n== SAME, WEEKDAY 9AM-5PM ONLY ({day.sum():,} hours) ==")
-rows = [{"baseline": k, **metrics(val[TARGET][day], p[day])} for k, p in preds.items()]
-log(pd.DataFrame(rows).round(3).to_string(index=False))
+    # the hours that matter for ventilation: weekdays 9am to 5pm
+    day = ((val["dow"] < 5) & (val["hour"] >= 9) & (val["hour"] < 17)).to_numpy()
+    log(f"\n== SAME, WEEKDAY 9AM-5PM ONLY ({day.sum():,} hours) ==")
+    rows = [{"baseline": k, **metrics(val[TARGET][day], p[day])} for k, p in preds.items()]
+    log(pd.DataFrame(rows).round(3).to_string(index=False))
 
-best = preds["hour-of-week mean per space"]
-log("\n== BEST BASELINE, PER SPACE ==")
-rows = [{"space": s, "hours": int(m.sum()), **metrics(val[TARGET][m], best[m])}
-        for s in sorted(val["space"].unique()) for m in [(val["space"] == s).to_numpy()]]
-log(pd.DataFrame(rows).round(3).to_string(index=False))
+    best = preds["hour-of-week mean per space"]
+    log("\n== BEST BASELINE, PER SPACE ==")
+    rows = [{"space": s, "hours": int(m.sum()), **metrics(val[TARGET][m], best[m])}
+            for s in sorted(val["space"].unique()) for m in [(val["space"] == s).to_numpy()]]
+    log(pd.DataFrame(rows).round(3).to_string(index=False))
 
-(OUTDIR / "baselines.txt").write_text("\n".join(report), encoding="utf-8")
-print("\nsaved outputs/baselines.txt")
+    (OUTDIR / "baselines.txt").write_text("\n".join(report), encoding="utf-8")
+    print("\nsaved outputs/baselines.txt")
+
+if __name__ == "__main__":
+    main()

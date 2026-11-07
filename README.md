@@ -24,6 +24,11 @@ python -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 ```
+## Data
+
+The raw occupancy data is the Monash Smart Infrastructure Dataset 2 (not included in this repo because of its size).
+Download it from: <https://drive.google.com/drive/u/1/folders/1sB4UyZc4c6h67iKfmWcCm0Kv3DSjnCb2>
+Place the file in `data/` before running `convert_to_parquet.py`.
 
 ## Run order
 

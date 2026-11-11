@@ -8,6 +8,9 @@ occupancy spaces; that audit is part of the report.
 
 ## Data (not included in the repository)
 
+Download the Dataset 2 files from: <(https://drive.google.com/drive/folders/1sB4UyZc4c6h67iKfmWcCm0Kv3DSjnCb2)>
+(the folder provided by the MMA3001 teaching team; access is restricted to Monash accounts)
+
 Put these files in `data/raw/`:
 
 - `5EnvSensor_MayToDec2024_180kRows.csv`
@@ -24,11 +27,6 @@ python -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 ```
-## Data
-
-The raw occupancy data is the Monash Smart Infrastructure Dataset 2 (not included in this repo because of its size).
-Download it from: <https://drive.google.com/drive/u/1/folders/1sB4UyZc4c6h67iKfmWcCm0Kv3DSjnCb2>
-Place the file in `data/` before running `convert_to_parquet.py`.
 
 ## Run order
 
